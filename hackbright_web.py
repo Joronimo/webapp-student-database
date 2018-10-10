@@ -43,10 +43,13 @@ def get_student():
 
     first, last, github = hb.get_student_by_github(github)
 
+    projects = hb.get_student_projects_and_grades(github)
+
     html = render_template("student_info.html",
                            first=first,
                            last=last,
-                           github=github)
+                           github=github,
+                           projects=projects)
 
     return html
 
@@ -64,6 +67,24 @@ def student_add():
 
     return html
 
+@app.route("/project")
+def project_info():
+    """Link to information about a project."""
+
+    title = request.args.get('title')
+
+    title, description, max_grade = hb.get_project_by_title(title)
+
+    students = hb.get_project_student_and_grade(title)
+
+    print("STUDENTS: ", students)
+
+    html = render_template("project_info.html", title=title,
+                            description=description, 
+                            max_grade=max_grade,
+                            students=students)
+
+    return html
 
 if __name__ == "__main__":
     hb.connect_to_db(app)

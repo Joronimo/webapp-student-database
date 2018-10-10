@@ -79,6 +79,7 @@ def get_project_by_title(title_input):
 
     print(f"Title: {row[0]}, Description: {row[1]}, Max Grade: {row[2]}")
 
+    return row
 
 def get_grade_by_github_title(github_input, title_input):
     """Print grade student received for a project."""
@@ -96,6 +97,37 @@ def get_grade_by_github_title(github_input, title_input):
     db.session.commit()
 
     print(f"Grade: {row[0]}")
+
+def get_student_projects_and_grades(github_input):
+    """Print grade student received for a project."""
+    QUERY = """
+               SELECT project_title, grade
+               FROM grades
+               WHERE student_github = :github_ph
+            """
+    db_cursor = db.session.execute(QUERY, {'github_ph': github_input})
+
+    row = db_cursor.fetchall()
+
+    db.session.commit()
+
+    return row
+
+def get_project_student_and_grade(title_input):
+    """Print grade student received for a project."""
+    QUERY = """
+               SELECT student_github, grade
+               FROM grades
+               WHERE project_title = :title_ph
+
+            """
+    db_cursor = db.session.execute(QUERY, {'title_ph': title_input})
+
+    row = db_cursor.fetchall()
+
+    db.session.commit()
+
+    return row
 
 
 def assign_grade(github, title, grade):
