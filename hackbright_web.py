@@ -6,22 +6,16 @@ import hackbright as hb
 
 app = Flask(__name__)
 
-@app.route("/ask-student-type")
+@app.route("/home")
 def get_student_type_form():
     """asks if student is new or existing"""
 
-    return render_template("student_type.html")
+    projects = hb.get_project()
 
-@app.route("/student-type-choice")
-def type_of_student():
-    """redirects to appropriate page based on choice of new or existing student."""
+    students = hb.get_student()
 
-    student_type = request.args.get('student_type')
+    return render_template("homepage.html", projects=projects, students=students)
 
-    if student_type == "existing":
-        return redirect("/student-search")
-    elif student_type == "new":
-        return redirect("/new-student")
 
 @app.route("/student-search")
 def get_student_form():

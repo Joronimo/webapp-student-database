@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Project Tracker</title>
+</head>
+<body>
+  <h1> Home Page </h1>
+  <h2> Projects </h2>
+  	<ul> 
+		{% for project in projects %}
+			<li><a href="/project?title={{ project[0] }}">{{ project[0] }}</a></li>
+		{% endfor %}
+	</ul>
+  <h2> Students </h2>
+  	<ul> 
+		{% for student in students %}
+			<li> <a href="/student?github={{ student[2] }}">{{ student[0] }} {{ student[1] }} </a></li>
+		{% endfor %}
+	</ul>
+
+  <form action="/new-student">
+      <input type="submit" value="Add New Student">
+  </form>
+</body>
+</html>
